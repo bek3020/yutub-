@@ -19,7 +19,8 @@ export default function Register() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3000/users", form);
-      alert("Registered successfully ✅");
+      alert("Registered successfully ✅. Now logging you in.");
+
       navigate("/");
     } catch (error) {
       alert("Registration failed. Please try again.");
@@ -30,10 +31,10 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
       <a
-        className="w-[40px] h-[40px] bg-black rounded-2xl flex items-center justify-center"
+        className="absolute top-4 left-4 w-[40px] h-[40px] bg-black rounded-2xl flex items-center justify-center"
         href="/login"
       >
-        <i class="fa-solid fa-arrow-left text-amber-50"></i>
+        <i className="fa-solid fa-arrow-left text-amber-50"></i>
       </a>
       <form
         onSubmit={handleRegister}

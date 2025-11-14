@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Logo from "../assets/img/Logo.png";
 import Home_img from "../assets/img/profil.png";
+import Cards from "../components/Cards";
 import { useNavigate } from "react-router-dom";
 
 const categories = [
@@ -32,7 +33,7 @@ const Home = () => {
           <div className="flex flex-col items-center">
             <nav className="flex items-center justify-between p-[10px] w-full bg-black sticky top-0 z-10">
               <div className="flex items-center gap-2">
-                <button      className="btn_home p-2">
+                <button className="btn_home p-2">
                   <i className="fa-solid fa-bars text-white cursor-pointer"></i>
                 </button>
                 <a href="/">
@@ -105,6 +106,8 @@ const Home = () => {
         <h2 className="text-white mt-4">
           Kontentlar: {activeCategory} bo'yicha
         </h2>
+        {/* Cards komponenti bu yerda chiqariladi */}
+        <Cards />
       </main>
     </div>
   );
