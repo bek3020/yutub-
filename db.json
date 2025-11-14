@@ -1,0 +1,86 @@
+
+    {
+  "videos": [
+    {
+      "id": 1,
+      "title": "Learn React in 10 Minutes",
+      "channel": "James Gouse",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/4fbWc90/youtube.png",
+      "avatar": "https://i.ibb.co/JdZV5rK/avatar1.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 2,
+      "title": "Instagram Reels Design in Figma",
+      "channel": "Alan Cooper",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/6m5hN9s/instagram.png",
+      "avatar": "https://i.ibb.co/s3sMq3H/avatar2.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 3,
+      "title": "TikTok Algorithm Explained",
+      "channel": "Marcus Levin",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/J7mFW5r/tiktok.png",
+      "avatar": "https://i.ibb.co/zSRnXbz/avatar3.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 4,
+      "title": "Netflix UI Clone with React",
+      "channel": "Alexis Sears",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/xCGgVhq/netflix.png",
+      "avatar": "https://i.ibb.co/gTmxkz9/avatar4.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 5,
+      "title": "Twitter API Tutorial",
+      "channel": "Jesica Lambert",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/6PnyxNs/twitter.png",
+      "avatar": "https://i.ibb.co/Yy4WcKY/avatar5.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 6,
+      "title": "Spotify Music Visualizer",
+      "channel": "Anna White",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/zRmtvw5/spotify.png",
+      "avatar": "https://i.ibb.co/9rnHtzy/avatar6.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 7,
+      "title": "Discord Bot Setup",
+      "channel": "Skylar Dias",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/fpJPm7V/discord.png",
+      "avatar": "https://i.ibb.co/Q6s7Zhm/avatar7.jpg",
+      "duration": "23:45"
+    },
+    {
+      "id": 8,
+      "title": "Tesla Autopilot Explained",
+      "channel": "James Gouse",
+      "views": "15K Views",
+      "time": "1 week ago",
+      "thumbnail": "https://i.ibb.co/NW3RZr8/tesla.png",
+      "avatar": "https://i.ibb.co/JdZV5rK/avatar1.jpg",
+      "duration": "23:45"
+    }
+  ]
+}
+
