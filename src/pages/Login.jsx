@@ -1,85 +1,131 @@
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { LogIn, X } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // <-- qo'shildi
 
-export default function Login() {
+const LOCAL_DATA = {
+  users: [{ id: 1, username: "admin", password: "123456" }],
+};
+
+const MessageBox = ({ message, onClose }) => {
+  if (!message) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="bg-gray-800 p-6 rounded-xl shadow-2xl max-w-sm w-full border border-gray-700">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold text-white">Xabar</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-white transition"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <p className="text-gray-300 mb-6">{message}</p>
+        <button
+          onClick={onClose}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
+        >
+          Yopish
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const Login = ({ onLoginSuccess }) => {
   const [form, setForm] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
+  const [localMessage, setLocalMessage] = useState(null);
+  const navigate = useNavigate(); // <-- navigatsiyani olish
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.get("http://localhost:3000/users");
-      const user = res.data.find(
-        (u) => u.username === form.username && u.password === form.password
+    const user = LOCAL_DATA.users.find(
+      (u) => u.username === form.username && u.password === form.password
+    );
+
+    if (user) {
+      setLocalMessage(
+        "Muvaffaqiyatli login! Bosh sahifaga yo'naltirilmoqda..."
+      );
+      onLoginSuccess?.({ uid: user.id, username: user.username });
+
+      // localStorage ga user ma'lumotini saqlash
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ uid: user.id, username: user.username })
       );
 
-      if (user) {
-        alert("Login successful ");
-      } else {
-        alert("Username or password incorrect ");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Server bilan bog‘lanishda xato yuz berdi.");
+      setTimeout(() => navigate("/"), 1000); // Home sahifaga yo'naltirish
+    } else {
+      setLocalMessage("Foydalanuvchi nomi yoki parol noto'g'ri.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <a
-        className="w-[40px] h-[40px] bg-black rounded-2xl flex items-center justify-center"
-        href="/"
-      >
-        <i class="fa-solid fa-arrow-left text-amber-50"></i>
-      </a>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+      <MessageBox
+        message={localMessage}
+        onClose={() => setLocalMessage(null)}
+      />
       <form
         onSubmit={handleLogin}
-        className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md border border-gray-700"
       >
-        <h2 className="text-2xl font-semibold text-white mb-6 text-center">
-          Login to YouTube
+        <h2 className="text-3xl font-bold text-white mb-8 text-center">
+          Kirish
         </h2>
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
-          className="w-full p-3 mb-4 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-400 mb-2">
+            Foydalanuvchi nomi
+          </label>
+          <input
+            type="text"
+            name="username"
+            placeholder="admin"
+            value={form.username}
+            onChange={handleChange}
+            required
+            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full p-3 mb-6 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-400 mb-2">
+            Parol
+          </label>
+          <input
+            type="password"
+            name="password"
+            placeholder="123456"
+            value={form.password}
+            onChange={handleChange}
+            required
+            className="w-full p-3 rounded-lg bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+          />
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
-          Login
+          <LogIn className="w-5 h-5" /> Kirish
         </button>
 
         <p
           onClick={() => navigate("/register")}
-          className="mt-4 text-center text-gray-400 hover:text-white cursor-pointer select-none"
+          className="mt-6 text-center text-gray-400 hover:text-white cursor-pointer transition text-sm"
         >
-          Don't have an account? Register
+          Hisobingiz yo'qmi? Ro'yxatdan o'tish
         </p>
       </form>
     </div>
   );
-}
+};
+
+export default Login;

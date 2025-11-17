@@ -3,12 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [form, setForm] = useState({
-    name: "",
-    surname: "",
-    username: "",
-    password: "",
-  });
+  const [form, setForm] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,25 +12,32 @@ export default function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:3000/users", form);
-      alert("Registered successfully ✅. Now logging you in.");
 
+    try {
+      // Foydalanuvchilar ro'yxatini olish
+      const res = await axios.get("http://localhost:8000/users");
+      const userExists = res.data.some((u) => u.username === form.username);
+
+      if (userExists) {
+        alert("Username already taken");
+        return;
+      }
+
+      // Yangi foydalanuvchini qo'shish
+      const newUser = { username: form.username, password: form.password };
+      await axios.post("http://localhost:8000/users", newUser);
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+      alert("Registration successful!");
       navigate("/");
     } catch (error) {
-      alert("Registration failed. Please try again.");
+      alert("Error connecting to server.");
       console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
-      <a
-        className="absolute top-4 left-4 w-[40px] h-[40px] bg-black rounded-2xl flex items-center justify-center"
-        href="/login"
-      >
-        <i className="fa-solid fa-arrow-left text-amber-50"></i>
-      </a>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <form
         onSubmit={handleRegister}
         className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md"
@@ -46,32 +48,12 @@ export default function Register() {
 
         <input
           type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-          className="w-full p-3 mb-4 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <input
-          type="text"
-          name="surname"
-          placeholder="Surname"
-          value={form.surname}
-          onChange={handleChange}
-          required
-          className="w-full p-3 mb-4 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
-        <input
-          type="text"
           name="username"
           placeholder="Username"
           value={form.username}
           onChange={handleChange}
           required
-          className="w-full p-3 mb-4 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 mb-4 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
         />
 
         <input
@@ -81,15 +63,19 @@ export default function Register() {
           value={form.password}
           onChange={handleChange}
           required
-          className="w-full p-3 mb-6 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 mb-6 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
         />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded transition"
-        >
+        <button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded transition">
           Register
         </button>
+
+        <p
+          onClick={() => navigate("/login")}
+          className="mt-4 text-center text-gray-400 hover:text-white cursor-pointer"
+        >
+          Already have an account? Login
+        </p>
       </form>
     </div>
   );
